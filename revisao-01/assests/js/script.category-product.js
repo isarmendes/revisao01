@@ -51,8 +51,9 @@ function createCategory(){
     const categoryName = document.getElementById("categoryName").value;
     // console.log(categoryName);
     categoryList.addCategory(categoryName);
-
-    console.log(categoryList.categories);
+    displayCategoriesAndProducts()
+    clearFormFields()
+    // console.log(categoryList.categories);
 
 }
 
@@ -64,6 +65,46 @@ function  createProduct(){
     productList.addProduct(productName,productPrice, productCategory);
 
     // console.log(productList.products);
+}
+
+function clearFormFields(){
+    document.getElementById("categoryName").value = "";
+    document.getElementById("productNmae").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("productCategory").value = "";
+}
+
+function displayCategoriesAndProducts(){
+    let content ="";
+    categoryList.categories.forEach((category) =>{
+        content +=`
+    <li>
+        <div class="categoriesList">
+             <span><b>Categoria:</b>${category.name}</span>
+             <div>
+             <button class="editButton">Editar</button>
+             <button class="deleteButton">Remover</button>
+             </div>
+        </div>
+        <ul class="productsListByCategory">`;
+        category.products.forEach((product) => {
+            content+= `
+            <li>
+            <div class="productsList">
+            <span><b>Produto:</b>${product.name} -<b> Preço:</b>${product.price}</span>
+            <div>
+            <button class="editButton">Editar</button>
+            <button class="deleteButton">Remover</button>
+            </div>
+            </div>
+            </li>`;
+        });
+        content+=`
+        </ul>
+    </li>  
+        `;
+    });
+    document.getElementById("categoriesList").innerHTML = content;
 }
 
 
